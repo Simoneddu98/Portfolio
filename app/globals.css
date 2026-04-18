@@ -1,26 +1,125 @@
 @import "tailwindcss";
 
+/* ─── Design tokens ──────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Palette */
+  --color-bg-warm-start:  #F8F6F2;
+  --color-bg-warm-end:    #EDE8DF;
+  --color-ink:            #0F0F0F;
+  --color-ink-muted:      #5A5A5A;
+  --color-border:         #E0DDD8;
+  --color-accent:         #E85D26;
+  --color-accent-deep:    #B8370C;
+  --color-accent-glow:    #FFB37A;
+
+  /* Gradient unico: hero + contact */
+  --gradient-warm: radial-gradient(
+    ellipse 100% 80% at 50% 45%,
+    #FF8A3D 0%,
+    #E85D26 35%,
+    #B8370C 70%,
+    #7A1F00 100%
+  );
+
+  /* Layout */
+  --section-pt:  clamp(5rem, 10vw, 10rem);
+  --section-pb:  clamp(5rem, 10vw, 10rem);
+  --page-px:     clamp(1.25rem, 5vw, 6rem);
+
+  /* Radius */
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-soft:   0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06);
+  --shadow-lift:   0 4px 8px rgba(0,0,0,.05), 0 16px 40px rgba(0,0,0,.08);
+  --shadow-keycap: 0 20px 60px rgba(184,55,12,.25), 0 8px 20px rgba(0,0,0,.15);
 }
 
+[data-theme="dark"] {
+  --color-bg-warm-start: #0F0F0F;
+  --color-bg-warm-end:   #1A1A1A;
+  --color-ink:           #F8F6F2;
+  --color-ink-muted:     #A8A6A1;
+  --color-border:        #2A2A2A;
+}
+
+/* ─── Tailwind v4 theme extension ────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Font variables (set via next/font in layout.tsx) */
+  --font-display: var(--font-space-grotesk);
+  --font-body:    var(--font-dm-sans);
+  --font-mono:    var(--font-jetbrains-mono);
+
+  /* Fluid type scale */
+  --text-display-xl: clamp(3.5rem, 14vw, 18rem);
+  --text-display-lg: clamp(3rem, 10vw, 12rem);
+  --text-display-md: clamp(2.25rem, 6vw, 6rem);
+  --text-headline:   clamp(1.5rem, 3vw, 2.5rem);
+  --text-body-lg:    clamp(1.125rem, 1.2vw, 1.375rem);
+
+  /* Diamond animation */
+  --animate-diamond-rotate: diamond-rotate 3s linear infinite;
+
+  /* Map Tailwind font-sans / font-mono to project fonts */
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-jetbrains-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes diamond-rotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─── Text component color aliases ───────────────────────────── */
+:root {
+  --color-ink-accent: var(--color-accent);
+  --color-ink-accent-deep: var(--color-accent-deep);
+}
+
+/* ─── Base ───────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg-warm-start);
+  color: var(--color-ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
 }
+
+/* Riduce motion per accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus visibile accessibile */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+/* Scroll bar sottile su webkit */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
