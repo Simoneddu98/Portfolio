@@ -157,6 +157,33 @@ export function ServiziSection() {
           <ServizioCard key={s.id} servizio={s} index={i} />
         ))}
         <div className="border-t" style={{ borderColor: "var(--color-border)" }} />
+
+        <div className="mt-10 lg:mt-14 flex flex-col items-start gap-2">
+          <p
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "clamp(0.9rem, 1vw, 1rem)",
+              color: "var(--color-ink-muted)",
+            }}
+          >
+            Vuoi qualcosa costruito attorno alle esigenze del tuo team?
+          </p>
+          <a
+            href="mailto:simonesanna.lavoro@gmail.com"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "clamp(0.9rem, 1.2vw, 1.125rem)",
+              background: "rgba(0,0,0,0.06)",
+              color: "var(--color-ink)",
+              border: "1px solid rgba(0,0,0,0.1)",
+              backdropFilter: "blur(8px)",
+              boxShadow: "var(--shadow-soft)",
+            }}
+          >
+            Scrivimi per una formazione su misura <span aria-hidden>→</span>
+          </a>
+        </div>
       </div>
     </Section>
   );

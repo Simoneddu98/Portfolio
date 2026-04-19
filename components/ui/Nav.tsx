@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { LogoMark } from "./LogoMark";
 
 const links = [
-  { href: "#metodo",   label: "metodo" },
+  { href: "#servizi",  label: "servizi" },
   { href: "#works",    label: "works" },
   { href: "#contatti", label: "contatti" },
 ];

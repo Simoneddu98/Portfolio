@@ -89,11 +89,11 @@ export function HeroSection() {
               scrivimi ↗
             </a>
             <a
-              href="#metodo"
+              href="#servizi"
               className="text-white/60 text-sm font-medium hover:text-white/90 transition-colors"
               style={{ fontFamily: 'var(--font-body)' }}
             >
-              scopri il metodo ↓
+              scopri i servizi ↓
             </a>
           </motion.div>
 
