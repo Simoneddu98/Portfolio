@@ -45,11 +45,9 @@ const servizi = [
 function ServizioCard({
   servizio,
   index,
-  onCtaClick,
 }: {
   servizio: (typeof servizi)[0];
   index: number;
-  onCtaClick?: () => void;
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
@@ -106,24 +104,6 @@ function ServizioCard({
         </ul>
       )}
 
-      {servizio.cta && (
-        <button
-          onClick={onCtaClick}
-          className="self-start mt-2 font-medium hover:opacity-70 transition-opacity"
-          style={{
-            fontFamily: "var(--font-body)",
-            color: "var(--color-accent)",
-            textDecorationLine: "underline",
-            textUnderlineOffset: "4px",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            padding: 0,
-          }}
-        >
-          {servizio.cta.label}
-        </button>
-      )}
     </motion.article>
   );
 }
@@ -164,7 +144,6 @@ export function ServiziSection() {
             key={s.id}
             servizio={s}
             index={i}
-            onCtaClick={s.cta ? () => openModal({ subject: s.cta!.subject }) : undefined}
           />
         ))}
         <div className="border-t" style={{ borderColor: "var(--color-border)" }} />
