@@ -96,18 +96,16 @@ export function IntroSection() {
           <div className="mt-12 lg:mt-16">
             <a
               href="mailto:simonesanna.lavoro@gmail.com"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-90"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "clamp(0.9rem, 1.2vw, 1.125rem)",
-                background: "rgba(0,0,0,0.06)",
-                color: "var(--color-ink)",
-                border: "1px solid rgba(0,0,0,0.1)",
-                backdropFilter: "blur(8px)",
-                boxShadow: "var(--shadow-soft)",
+                background: "var(--color-accent)",
+                color: "#fff",
+                boxShadow: "0 4px 16px rgba(232,93,38,0.3)",
               }}
             >
-              Scrivimi per una formazione su misura <span aria-hidden>→</span>
+              Dimmi di cosa hai bisogno <span aria-hidden>→</span>
             </a>
           </div>
         </FadeUp>
