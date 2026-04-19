@@ -43,7 +43,7 @@ export function ContactModal() {
     handleSubmit,
     reset,
     setValue,
-    formState: { errors, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitting, isSubmitSuccessful, submitCount },
   } = useForm<ContactPayload>({
     resolver: zodResolver(contactSchema),
     defaultValues: { _honeypot: "" },
@@ -78,7 +78,10 @@ export function ContactModal() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    if (!res.ok) throw new Error("send failed");
+    if (!res.ok) {
+      const json = await res.json().catch(() => ({}));
+      throw new Error(json.error ?? "send failed");
+    }
   };
 
   return (
@@ -260,6 +263,12 @@ export function ContactModal() {
                     />
                     {errors.message && <p style={errorStyle}>{errors.message.message}</p>}
                   </div>
+
+                  {submitCount > 0 && !isSubmitSuccessful && !isSubmitting && (
+                    <p style={{ ...errorStyle, fontSize: "0.875rem" }}>
+                      Qualcosa è andato storto. Riprova o scrivimi direttamente a simonesanna.lavoro@gmail.com
+                    </p>
+                  )}
 
                   <button
                     type="submit"
