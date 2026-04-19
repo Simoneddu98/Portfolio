@@ -1,12 +1,8 @@
-import { Resend } from "resend";
 import { contactSchema } from "@/lib/contact-schema";
 
 export const runtime = "edge";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const TO = process.env.CONTACT_TO_EMAIL ?? "simonesanna.lavoro@gmail.com";
-const FROM_DOMAIN = process.env.FROM_DOMAIN ?? "onboarding@resend.dev";
-const FROM_NAME = process.env.FROM_NAME ?? "Portfolio Simone Sanna";
+const ACCESS_KEY = process.env.WEB3FORMS_ACCESS_KEY!;
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
@@ -25,18 +21,24 @@ export async function POST(req: Request) {
     ? `[Portfolio] ${subject}`
     : `[Portfolio] Messaggio da ${name}`;
 
-  const { error } = await resend.emails.send({
-    from: `${FROM_NAME} <${FROM_DOMAIN}>`,
-    to: TO,
-    replyTo: email,
-    subject: subjectLine,
-    text: `Nome: ${name}\nEmail: ${email}\n\n${message}`,
-    html: `<p><strong>Nome:</strong> ${name}<br><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p><p>${message.replace(/\n/g, "<br>")}</p>`,
+  const res = await fetch("https://api.web3forms.com/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({
+      access_key: ACCESS_KEY,
+      name,
+      email,
+      replyto: email,
+      subject: subjectLine,
+      message: `Nome: ${name}\nEmail: ${email}\n\n${message}`,
+    }),
   });
 
-  if (error) {
-    console.error("Resend error:", error);
-    return Response.json({ error: error.message }, { status: 500 });
+  const data = await res.json().catch(() => ({}));
+
+  if (!res.ok || !data.success) {
+    console.error("Web3Forms error:", data);
+    return Response.json({ error: data.message ?? "invio fallito" }, { status: 500 });
   }
 
   return Response.json({ ok: true });

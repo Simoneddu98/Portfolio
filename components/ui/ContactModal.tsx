@@ -73,14 +73,30 @@ export function ContactModal() {
   }, [state.isOpen]);
 
   const onSubmit = async (data: ContactPayload) => {
-    const res = await fetch("/api/contact", {
+    if (data._honeypot) return; // bot trap
+
+    const subjectLine = data.subject
+      ? `[Portfolio] ${data.subject}`
+      : `[Portfolio] Messaggio da ${data.name}`;
+
+    const res = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+        from_name: data.name,
+        name: data.name,
+        email: data.email,
+        replyto: data.email,
+        subject: subjectLine,
+        message: `Nome: ${data.name}\nEmail: ${data.email}\n\n${data.message}`,
+        botcheck: "",
+      }),
     });
-    if (!res.ok) {
-      const json = await res.json().catch(() => ({}));
-      throw new Error(json.error ?? "send failed");
+
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok || !json.success) {
+      throw new Error(json.message ?? "invio fallito");
     }
   };
 
@@ -187,7 +203,7 @@ export function ContactModal() {
                   Messaggio inviato!
                 </p>
                 <p style={{ fontSize: "0.9rem", marginTop: "0.5rem" }}>
-                  Ti ho mandato anche una conferma via email.
+                  Grazie mille per avere compilato il form :) Riceverai una risposta entro 48 ore!
                 </p>
                 <button
                   onClick={closeModal}
