@@ -1,14 +1,27 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
+import { getCalApi } from "@calcom/embed-react";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/text";
+import { useContactModal } from "@/components/ui/ContactModalContext";
 
 export function ContattiSection() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
   const shouldReduceMotion = useReducedMotion();
+  const { openModal } = useContactModal();
+
+  useEffect(() => {
+    (async () => {
+      const cal = await getCalApi({ namespace: "consulenza" });
+      cal("ui", {
+        styles: { branding: { brandColor: "#E85D26" } },
+        hideEventTypeDetails: false,
+      });
+    })();
+  }, []);
 
   return (
     <section
@@ -43,9 +56,29 @@ export function ContattiSection() {
           initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col sm:flex-row flex-wrap gap-4"
         >
-          <a
-            href="mailto:simonesanna.lavoro@gmail.com"
+          <button
+            onClick={() => openModal()}
+            className="inline-flex items-center gap-3 px-6 py-4 rounded-full font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontSize: "clamp(1rem, 1.5vw, 1.375rem)",
+              background: "#E85D26",
+              color: "white",
+              border: "none",
+              cursor: "pointer",
+              boxShadow: "var(--shadow-lift)",
+            }}
+          >
+            scrivimi
+            <span aria-hidden>↗</span>
+          </button>
+
+          <button
+            data-cal-namespace="consulenza"
+            data-cal-link="simone-sanna-ai/chiamata-esplorativa"
+            data-cal-config='{"layout":"month_view"}'
             className="inline-flex items-center gap-3 px-6 py-4 rounded-full font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
             style={{
               fontFamily: "var(--font-body)",
@@ -55,11 +88,12 @@ export function ContattiSection() {
               border: "1px solid rgba(255,255,255,0.3)",
               backdropFilter: "blur(8px)",
               boxShadow: "var(--shadow-lift)",
+              cursor: "pointer",
             }}
           >
-            scrivimi a simonesanna.lavoro@gmail.com
+            prenota una chiamata
             <span aria-hidden>↗</span>
-          </a>
+          </button>
         </motion.div>
 
         <motion.div

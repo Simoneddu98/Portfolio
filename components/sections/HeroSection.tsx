@@ -76,7 +76,7 @@ export function HeroSection() {
             className="mt-8 flex items-center gap-4 flex-wrap"
           >
             <a
-              href="mailto:hello@simonesanna.it"
+              href="#servizi"
               className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-medium transition-all hover:scale-[1.03] active:scale-[0.98]"
               style={{
                 fontFamily: 'var(--font-body)',
@@ -85,13 +85,6 @@ export function HeroSection() {
                 border: '1px solid rgba(255,255,255,0.3)',
                 backdropFilter: 'blur(8px)',
               }}
-            >
-              scrivimi ↗
-            </a>
-            <a
-              href="#servizi"
-              className="text-white/60 text-sm font-medium hover:text-white/90 transition-colors"
-              style={{ fontFamily: 'var(--font-body)' }}
             >
               scopri i servizi ↓
             </a>

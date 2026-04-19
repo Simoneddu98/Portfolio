@@ -122,21 +122,6 @@ export function CertificazioniSection() {
         ))}
         <div className="border-t" style={{ borderColor: "var(--color-border)" }} />
 
-        <div className="mt-10 lg:mt-14">
-          <a
-            href="mailto:simonesanna.lavoro@gmail.com"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-90"
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "clamp(0.9rem, 1.2vw, 1.125rem)",
-              background: "var(--color-accent)",
-              color: "#fff",
-              boxShadow: "0 4px 16px rgba(232,93,38,0.3)",
-            }}
-          >
-            Quante altre sezioni ti servono? <span aria-hidden>→</span>
-          </a>
-        </div>
       </div>
     </Section>
   );

@@ -8,7 +8,7 @@ export function Footer() {
         padding: "2rem var(--page-px)",
       }}
     >
-      <div className="max-w-[1440px] mx-auto w-full">
+      <div className="max-w-[1440px] mx-auto w-full flex items-center justify-between gap-4 flex-wrap">
         <span
           style={{
             fontFamily: "var(--font-mono)",

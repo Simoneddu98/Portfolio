@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/text";
+import { useContactModal } from "@/components/ui/ContactModalContext";
 
 const paragraphs = [
   "Aiuto aziende e professionisti a integrare l'AI nei processi quotidiani. Ogni percorso parte da quello che il team fa già: si mappano i flussi, si individuano i punti di attrito, si costruisce un sistema che funziona sul lavoro reale.",
@@ -35,6 +36,7 @@ function FadeUp({
 }
 
 export function IntroSection() {
+  const { openModal } = useContactModal();
   return (
     <Section
       id="intro"
@@ -94,8 +96,8 @@ export function IntroSection() {
 
         <FadeUp delay={0.65}>
           <div className="mt-12 lg:mt-16">
-            <a
-              href="mailto:simonesanna.lavoro@gmail.com"
+            <button
+              onClick={() => openModal()}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-90"
               style={{
                 fontFamily: "var(--font-body)",
@@ -103,10 +105,12 @@ export function IntroSection() {
                 background: "var(--color-accent)",
                 color: "#fff",
                 boxShadow: "0 4px 16px rgba(232,93,38,0.3)",
+                border: "none",
+                cursor: "pointer",
               }}
             >
               Dimmi di cosa hai bisogno <span aria-hidden>→</span>
-            </a>
+            </button>
           </div>
         </FadeUp>
       </div>

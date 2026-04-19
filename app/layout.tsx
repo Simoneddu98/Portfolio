@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { ContactModalProvider } from "@/components/ui/ContactModalContext";
+import { ContactModal } from "@/components/ui/ContactModal";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -45,7 +47,12 @@ export default function RootLayout({
       lang="it"
       className={`${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="min-h-[100svh] overflow-x-hidden">{children}</body>
+      <body className="min-h-[100svh] overflow-x-hidden">
+          <ContactModalProvider>
+            {children}
+            <ContactModal />
+          </ContactModalProvider>
+        </body>
     </html>
   );
 }

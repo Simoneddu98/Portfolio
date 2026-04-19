@@ -76,7 +76,7 @@ export function Nav() {
                   className="text-sm font-medium transition-colors hover:text-(--color-accent)"
                   style={{
                     color: "var(--color-ink)",
-                    textDecoration: active === link.href ? "underline" : "none",
+                    textDecorationLine: active === link.href ? "underline" : "none",
                     textDecorationColor: "var(--color-accent)",
                     textDecorationThickness: "2px",
                     textUnderlineOffset: "4px",

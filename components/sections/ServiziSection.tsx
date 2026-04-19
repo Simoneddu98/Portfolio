@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/text";
+import { useContactModal } from "@/components/ui/ContactModalContext";
 
 const servizi = [
   {
@@ -38,16 +39,17 @@ const servizi = [
       "Copywriting per post LinkedIn, Instagram e altri canali",
       "Costruzione della voce editoriale e del tono di comunicazione",
     ],
-    cta: { label: "Scrivimi →", href: "mailto:simonesanna.lavoro@gmail.com" },
   },
 ];
 
 function ServizioCard({
   servizio,
   index,
+  onCtaClick,
 }: {
   servizio: (typeof servizi)[0];
   index: number;
+  onCtaClick?: () => void;
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
@@ -105,19 +107,22 @@ function ServizioCard({
       )}
 
       {servizio.cta && (
-        <a
-          href={servizio.cta.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="self-start mt-2 font-medium underline underline-offset-4 hover:opacity-70 transition-opacity"
+        <button
+          onClick={onCtaClick}
+          className="self-start mt-2 font-medium hover:opacity-70 transition-opacity"
           style={{
             fontFamily: "var(--font-body)",
             color: "var(--color-accent)",
-            textDecorationColor: "var(--color-accent)",
+            textDecorationLine: "underline",
+            textUnderlineOffset: "4px",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            padding: 0,
           }}
         >
           {servizio.cta.label}
-        </a>
+        </button>
       )}
     </motion.article>
   );
@@ -127,6 +132,7 @@ export function ServiziSection() {
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-10%" });
   const shouldReduceMotion = useReducedMotion();
+  const { openModal } = useContactModal();
 
   return (
     <Section
@@ -154,22 +160,18 @@ export function ServiziSection() {
 
       <div className="mt-4 lg:mt-6">
         {servizi.map((s, i) => (
-          <ServizioCard key={s.id} servizio={s} index={i} />
+          <ServizioCard
+            key={s.id}
+            servizio={s}
+            index={i}
+            onCtaClick={s.cta ? () => openModal({ subject: s.cta!.subject }) : undefined}
+          />
         ))}
         <div className="border-t" style={{ borderColor: "var(--color-border)" }} />
 
         <div className="mt-10 lg:mt-14 flex flex-col items-start gap-2">
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontSize: "clamp(0.9rem, 1vw, 1rem)",
-              color: "var(--color-ink-muted)",
-            }}
-          >
-            Vuoi qualcosa costruito attorno alle esigenze del tuo team?
-          </p>
-          <a
-            href="mailto:simonesanna.lavoro@gmail.com"
+          <button
+            onClick={() => openModal({ subject: "Formazione su misura" })}
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all hover:scale-[1.02] active:scale-[0.98] hover:brightness-90"
             style={{
               fontFamily: "var(--font-body)",
@@ -177,10 +179,12 @@ export function ServiziSection() {
               background: "var(--color-accent)",
               color: "#fff",
               boxShadow: "0 4px 16px rgba(232,93,38,0.3)",
+              border: "none",
+              cursor: "pointer",
             }}
           >
-            Non hai ancora scritto? <span aria-hidden>→</span>
-          </a>
+            Parliamone <span aria-hidden>→</span>
+          </button>
         </div>
       </div>
     </Section>
