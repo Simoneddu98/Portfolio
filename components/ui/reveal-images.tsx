@@ -56,7 +56,7 @@ function RevealImageListItem({ text, href, images }: RevealImageListItemProps) {
 const items: RevealImageListItemProps[] = [
   {
     text: "Il Metodo",
-    href: "#metodo",
+    href: "#intro",
     images: [
       {
         src: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=200&auto=format&fit=crop&q=60",
