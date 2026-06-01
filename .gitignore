@@ -32,6 +32,13 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env*.example
+!skill/backend/.env.example
+
+# python
+skill/backend/__pycache__/
+skill/backend/*.pyc
+skill/backend/.venv/
 
 # vercel
 .vercel
@@ -39,3 +46,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# reference assets (non fanno parte del sito, solo ispirazione)
+PORTFOLIO.mp4
+
+# appunti / prompt di integrazione componenti (non codice del sito)
+/indicazioni 3d
+/lettering hero section
+/pagina sotto la hero section
+/font
+chatbot/stile visivo chatbot

@@ -3,6 +3,7 @@ import { Space_Grotesk, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ContactModalProvider } from "@/components/ui/ContactModalContext";
 import { ContactModal } from "@/components/ui/ContactModal";
+import { BotmanWidget } from "@/components/ui/BotmanWidget";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -51,6 +52,7 @@ export default function RootLayout({
           <ContactModalProvider>
             {children}
             <ContactModal />
+            <BotmanWidget />
           </ContactModalProvider>
         </body>
     </html>
